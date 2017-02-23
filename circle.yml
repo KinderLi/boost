@@ -6,8 +6,8 @@
 
 machine:
   environment:
-    SCRIPT_N: ci_boost_status ci_boost_library_check ci_boost_release ci_boost_release
-    EOL_N: NA NA LF CRLF
+    SCRIPT_N: ci_boost_release ci_boost_release
+    EOL_N: LF CRLF
   pre:
     - |
         wget "https://raw.githubusercontent.com/boostorg/release-tools/develop/ci_boost_common.py" -P ${HOME}
@@ -22,6 +22,7 @@ machine:
         echo 'python "${HOME}/${SCRIPT}.py" "$@"' >> "${HOME}/script.sh"
         chmod +x "${HOME}/script.sh"
   post:
+    - sudo apt-get update; sudo apt-get install xsltproc
     - exec "${HOME}/script.sh" machine_post
 checkout:
   post:
